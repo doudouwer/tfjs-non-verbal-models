@@ -36,6 +36,73 @@ let startInferenceTime, numInferences = 0;
 let inferenceTimeSum = 0, lastPanelUpdate = 0;
 let rafId;
 
+function getIrisCenter(irisPoints) {
+  let sumX = 0, sumY = 0;
+  for (const p of irisPoints) {
+    sumX += p.x;
+    sumY += p.y;
+  }
+  return { x: sumX / irisPoints.length, y: sumY / irisPoints.length };
+}
+
+
+// 检测gaze方向
+function detectGazeDirection(face) {
+  const kps = face.keypoints;
+
+  // 左眼 iris: 468(中心) + 469,470,471,472
+  const leftIris = [kps[468], kps[469], kps[470], kps[471], kps[472]];
+  const leftPupil = getIrisCenter(leftIris);
+
+  // 右眼 iris: 473(中心) + 474,475,476,477
+  const rightIris = [kps[473], kps[474], kps[475], kps[476], kps[477]];
+  const rightPupil = getIrisCenter(rightIris);
+
+  // 左眼边界
+  const leftEye = {
+    left: kps[33],
+    right: kps[133],
+    top: kps[159],
+    bottom: kps[145],
+    pupil: leftPupil,
+    center: kps[468]
+  };
+
+  // 右眼边界
+  const rightEye = {
+    left: kps[362],
+    right: kps[263],
+    top: kps[386],
+    bottom: kps[374],
+    pupil: rightPupil,
+    center: kps[473]
+  };
+
+  // 计算相对位置
+  const relX = (
+      (leftEye.pupil.x - leftEye.left.x) / (leftEye.right.x - leftEye.left.x) +
+      (rightEye.pupil.x - rightEye.left.x) / (rightEye.right.x - rightEye.left.x)
+  ) / 2;
+
+  const relY = (
+      (leftEye.pupil.y - leftEye.top.y) / (leftEye.bottom.y - leftEye.top.y) +
+      (rightEye.pupil.y - rightEye.top.y) / (rightEye.bottom.y - rightEye.top.y)
+  ) / 2;
+
+  // 判断方向
+  let gaze = "CENTER";
+  if (relX < 0.35) gaze = "RIGHT";
+  else if (relX > 0.65) gaze = "LEFT";
+  else if (relY < 0.3 && relY > 0) {
+    gaze = "UP";
+  }
+  else if (relY < 0) {
+    gaze = "DOWN";
+  }
+
+  return gaze;
+}
+
 async function checkGuiUpdate() {
   if (STATE.isTargetFPSChanged || STATE.isSizeOptionChanged) {
     camera = await Camera.setupCamera(STATE.camera);
@@ -129,6 +196,11 @@ async function renderResult() {
     camera.drawResults(
         faces, STATE.modelConfig.triangulateMesh,
         STATE.modelConfig.boundingBox);
+
+    for (const face of faces) {
+      const gaze = detectGazeDirection(face);
+      console.log("Gaze:", gaze);
+    }
   }
 }
 

@@ -29,7 +29,7 @@ export const VIDEO_SIZE = {
   '360 X 270': {width: 360, height: 270}
 };
 export const STATE = {
-  camera: {targetFPS: 60, sizeOption: '640 X 480'},
+  camera: {targetFPS: 1, sizeOption: '640 X 480'},
   backend: '',
   flags: {},
   modelConfig: {}

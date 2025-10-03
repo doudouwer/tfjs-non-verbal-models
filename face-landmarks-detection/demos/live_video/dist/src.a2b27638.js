@@ -89782,9 +89782,9 @@ ENV.registerFlag('WASM_HAS_MULTITHREAD_SUPPORT', async () => {
   }
 });
 },{"@tensorflow/tfjs-core":"node_modules/@tensorflow/tfjs-core/dist/index.js"}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js":[function(require,module,exports) {
-var __filename = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js";
+var __filename = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-non-verbal-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js";
 var process = require("process");
-var __dirname = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
+var __dirname = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-non-verbal-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
 var global = arguments[3];
 var define;
 
@@ -89812,9 +89812,9 @@ else if (typeof exports === 'object')
 },{"fs":"node_modules/parcel-bundler/src/builtins/_empty.js","path":"node_modules/parcel-bundler/src/builtins/_empty.js","worker_threads":"node_modules/parcel-bundler/src/builtins/_empty.js","perf_hooks":"node_modules/parcel-bundler/src/builtins/_empty.js","os":"node_modules/parcel-bundler/src/builtins/_empty.js","process":"node_modules/process/browser.js"}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.worker.js":[function(require,module,exports) {
 module.exports.wasmWorkerContents = `"use strict";var Module={};var ENVIRONMENT_IS_NODE=typeof process=="object"&&typeof process.versions=="object"&&typeof process.versions.node=="string";if(ENVIRONMENT_IS_NODE){var nodeWorkerThreads=require("worker_threads");var parentPort=nodeWorkerThreads.parentPort;parentPort.on("message",data=>onmessage({data:data}));var fs=require("fs");Object.assign(global,{self:global,require:require,Module:Module,location:{href:__filename},Worker:nodeWorkerThreads.Worker,importScripts:function(f){(0,eval)(fs.readFileSync(f,"utf8")+"//# sourceURL="+f)},postMessage:function(msg){parentPort.postMessage(msg)},performance:global.performance||{now:function(){return Date.now()}}})}var initializedJS=false;var pendingNotifiedProxyingQueues=[];function threadPrintErr(){var text=Array.prototype.slice.call(arguments).join(" ");if(ENVIRONMENT_IS_NODE){fs.writeSync(2,text+"\n");return}console.error(text)}function threadAlert(){var text=Array.prototype.slice.call(arguments).join(" ");postMessage({cmd:"alert",text:text,threadId:Module["_pthread_self"]()})}var err=threadPrintErr;self.alert=threadAlert;Module["instantiateWasm"]=(info,receiveInstance)=>{var instance=new WebAssembly.Instance(Module["wasmModule"],info);receiveInstance(instance);Module["wasmModule"]=null;return instance.exports};self.onunhandledrejection=e=>{throw e.reason??e};self.startWorker=instance=>{Module=instance;postMessage({"cmd":"loaded"})};self.onmessage=e=>{try{if(e.data.cmd==="load"){Module["wasmModule"]=e.data.wasmModule;for(const handler of e.data.handlers){Module[handler]=function(){postMessage({cmd:"callHandler",handler:handler,args:[...arguments]})}}Module["wasmMemory"]=e.data.wasmMemory;Module["buffer"]=Module["wasmMemory"].buffer;Module["ENVIRONMENT_IS_PTHREAD"]=true;if(typeof e.data.urlOrBlob=="string"){importScripts(e.data.urlOrBlob)}else{var objectUrl=URL.createObjectURL(e.data.urlOrBlob);importScripts(objectUrl);URL.revokeObjectURL(objectUrl)}WasmBackendModuleThreadedSimd(Module)}else if(e.data.cmd==="run"){Module["__emscripten_thread_init"](e.data.pthread_ptr,0,0,1);Module["establishStackSpace"]();Module["PThread"].receiveObjectTransfer(e.data);Module["PThread"].threadInitTLS();if(!initializedJS){pendingNotifiedProxyingQueues.forEach(queue=>{Module["executeNotifiedProxyingQueue"](queue)});pendingNotifiedProxyingQueues=[];initializedJS=true}try{Module["invokeEntryPoint"](e.data.start_routine,e.data.arg)}catch(ex){if(ex!="unwind"){if(ex instanceof Module["ExitStatus"]){if(Module["keepRuntimeAlive"]()){}else{Module["__emscripten_thread_exit"](ex.status)}}else{throw ex}}}}else if(e.data.cmd==="cancel"){if(Module["_pthread_self"]()){Module["__emscripten_thread_exit"](-1)}}else if(e.data.target==="setimmediate"){}else if(e.data.cmd==="processProxyingQueue"){if(initializedJS){Module["executeNotifiedProxyingQueue"](e.data.queue)}else{pendingNotifiedProxyingQueues.push(e.data.queue)}}else if(e.data.cmd){err("worker.js received unknown command "+e.data.cmd);err(e.data)}}catch(ex){if(Module["__emscripten_thread_crashed"]){Module["__emscripten_thread_crashed"]()}throw ex}};`;
 },{}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js":[function(require,module,exports) {
-var __filename = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js";
+var __filename = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-non-verbal-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js";
 var process = require("process");
-var __dirname = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
+var __dirname = "/Users/zhangyanjie/Desktop/25Fall/QEF/tfjs-non-verbal-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
 var define;
 
 var WasmBackendModule = (() => {
@@ -106531,7 +106531,7 @@ const VIDEO_SIZE = {
 exports.VIDEO_SIZE = VIDEO_SIZE;
 const STATE = {
   camera: {
-    targetFPS: 60,
+    targetFPS: 1,
     sizeOption: '640 X 480'
   },
   backend: '',
@@ -107387,6 +107387,61 @@ let inferenceTimeSum = 0,
     lastPanelUpdate = 0;
 let rafId;
 
+function getIrisCenter(irisPoints) {
+  let sumX = 0,
+      sumY = 0;
+
+  for (const p of irisPoints) {
+    sumX += p.x;
+    sumY += p.y;
+  }
+
+  return {
+    x: sumX / irisPoints.length,
+    y: sumY / irisPoints.length
+  };
+} // 检测gaze方向
+
+
+function detectGazeDirection(face) {
+  const kps = face.keypoints; // 左眼 iris: 468(中心) + 469,470,471,472
+
+  const leftIris = [kps[468], kps[469], kps[470], kps[471], kps[472]];
+  const leftPupil = getIrisCenter(leftIris); // 右眼 iris: 473(中心) + 474,475,476,477
+
+  const rightIris = [kps[473], kps[474], kps[475], kps[476], kps[477]];
+  const rightPupil = getIrisCenter(rightIris); // 左眼边界
+
+  const leftEye = {
+    left: kps[33],
+    right: kps[133],
+    top: kps[159],
+    bottom: kps[145],
+    pupil: leftPupil,
+    center: kps[468]
+  }; // 右眼边界
+
+  const rightEye = {
+    left: kps[362],
+    right: kps[263],
+    top: kps[386],
+    bottom: kps[374],
+    pupil: rightPupil,
+    center: kps[473]
+  }; // 计算相对位置
+
+  const relX = ((leftEye.pupil.x - leftEye.left.x) / (leftEye.right.x - leftEye.left.x) + (rightEye.pupil.x - rightEye.left.x) / (rightEye.right.x - rightEye.left.x)) / 2;
+  const relY = ((leftEye.pupil.y - leftEye.top.y) / (leftEye.bottom.y - leftEye.top.y) + (rightEye.pupil.y - rightEye.top.y) / (rightEye.bottom.y - rightEye.top.y)) / 2; // 判断方向
+
+  let gaze = "CENTER";
+  if (relX < 0.35) gaze = "RIGHT";else if (relX > 0.65) gaze = "LEFT";else if (relY < 0.3 && relY > 0) {
+    gaze = "UP";
+  } else if (relY < 0) {
+    gaze = "DOWN";
+  }
+  return gaze;
+}
+
 async function checkGuiUpdate() {
   if (_params.STATE.isTargetFPSChanged || _params.STATE.isSizeOptionChanged) {
     camera = await _camera.Camera.setupCamera(_params.STATE.camera);
@@ -107476,6 +107531,11 @@ async function renderResult() {
 
   if (faces && faces.length > 0 && !_params.STATE.isModelChanged) {
     camera.drawResults(faces, _params.STATE.modelConfig.triangulateMesh, _params.STATE.modelConfig.boundingBox);
+
+    for (const face of faces) {
+      const gaze = detectGazeDirection(face);
+      console.log("Gaze:", gaze);
+    }
   }
 }
 

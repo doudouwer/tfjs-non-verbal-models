@@ -43,6 +43,59 @@ let rafId;
 let renderer = null;
 let useGpuRenderer = false;
 
+let shoulderWidths = [];
+let baselineShoulderWidth = null;
+let initStartTime = null;
+let initDone = false;
+
+
+// 姿势检测
+function detectPosture(pose, width, height) {
+  if (!pose || !pose.keypoints) return null;
+
+  const kps = pose.keypoints;
+  const leftShoulder = kps.find(k => k.name === "left_shoulder");
+  const rightShoulder = kps.find(k => k.name === "right_shoulder");
+
+  function findDistance(x1, y1, x2, y2) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+  }
+
+  if (leftShoulder && rightShoulder) {
+    const offset = findDistance(leftShoulder.x, leftShoulder.y,
+        rightShoulder.x, rightShoulder.y);
+
+    // 初始化阶段
+    if (!initDone) {
+      if (!initStartTime) initStartTime = Date.now();
+      shoulderWidths.push(offset);
+
+      if (Date.now() - initStartTime > 5000) {
+        baselineShoulderWidth = shoulderWidths.reduce((a,b)=>a+b,0) / shoulderWidths.length;
+        initDone = true;
+        console.log("Baseline shoulder width:", baselineShoulderWidth);
+      }
+      return "Calibrating...";  // 初始化时返回这个
+    }
+
+    // 检查不平衡姿势（肩膀高度差）
+    if (leftShoulder && rightShoulder) {
+      const tol = 50;
+      if (Math.abs(leftShoulder.y - rightShoulder.y) > tol) {
+        return "Unbalanced Posture";
+      }
+    }
+
+    // 判断转身
+    if (offset < baselineShoulderWidth * 0.88) {
+      return "Turning Around";
+    }
+  }
+
+  return "Normal";
+}
+
+
 async function createDetector() {
   switch (STATE.model) {
     case posedetection.SupportedModels.PoseNet:
@@ -188,6 +241,18 @@ async function renderResult() {
       [camera.video, poses, canvasInfo, STATE.modelConfig.scoreThreshold] :
       [camera.video, poses, STATE.isModelChanged];
   renderer.draw(rendererParams);
+
+  if (poses && poses.length > 0 && !STATE.isModelChanged) {
+    renderer.draw([camera.video, poses, STATE.isModelChanged]);
+    for (const pose of poses) {
+      const posture = detectPosture(
+          pose,
+          camera.video.width,
+          camera.video.height
+      );
+      console.log("Posture:", posture);
+    }
+  }
 }
 
 async function renderPrediction() {
